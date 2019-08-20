@@ -1,6 +1,6 @@
 FROM alpine
 
-MAINTAINER Lachlan Evenson <lachlan.evenson@gmail.com>
+LABEL maintainer="Lachlan Evenson <lachlan.evenson@gmail.com>"
 
 ARG VCS_REF
 ARG BUILD_DATE
@@ -11,7 +11,7 @@ LABEL org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.docker.dockerfile="/Dockerfile"
 
-ENV KUBE_LATEST_VERSION="v1.4.5"
+ENV KUBE_LATEST_VERSION="v1.15.2"
 
 RUN apk add --update ca-certificates \
  && apk add --update -t deps curl \
@@ -20,5 +20,6 @@ RUN apk add --update ca-certificates \
  && apk del --purge deps \
  && rm /var/cache/apk/*
 
+WORKDIR /root
 ENTRYPOINT ["kubectl"]
 CMD ["help"]
